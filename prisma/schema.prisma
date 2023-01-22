@@ -22,19 +22,22 @@ model Example {
 
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
+    id                String             @id @default(cuid())
     userId            String
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
+    refresh_token     String?            @db.Text
+    access_token      String?            @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? @db.Text
+    id_token          String?            @db.Text
     session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Messages          Messages[]
+    Inbox             Inbox[]
+    InboxParticipant  InboxParticipant[]
 
     @@unique([provider, providerAccountId])
 }
@@ -63,4 +66,35 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model InboxParticipant {
+    id         String @id
+    account_id String @map("accountId")
+    inbox_id   String @map("inboxId")
+
+    account Account @relation(fields: [account_id], references: [id])
+    inbox   Inbox   @relation(fields: [inbox_id], references: [id])
+
+    @@map("InboxParticipants")
+}
+
+model Inbox {
+    id                   String             @id @default(cuid())
+    account_id           String             @map("accountId")
+    last_sent_account_id String             @map("lastSentAccountId")
+    last_sent_message_id String             @map("lastSentMessageId")
+    account              Account            @relation(fields: [last_sent_account_id], references: [id], onUpdate: Cascade)
+    Messages             Messages[]
+    InboxParticipant     InboxParticipant[]
+}
+
+model Messages {
+    id              String  @id @default(cuid())
+    accountId       String
+    inboxId         String
+    message         String  @db.VarChar()
+    attachment_path String? @map("attachmentPath") @db.VarChar()
+    account         Account @relation(fields: [accountId], references: [id])
+    inbox           Inbox   @relation(fields: [inboxId], references: [id])
 }
