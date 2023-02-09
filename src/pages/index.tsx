@@ -1,14 +1,11 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
-
-const Home: NextPage = (props) => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
+import { EmailInput, PasswordInput } from "@components";
+const Home: NextPage = () => {
   return (
     <>
       <Head>
@@ -35,15 +32,21 @@ const Home: NextPage = (props) => {
             />
           </div>
           <div className="grid grid-cols-1">
-            <h2 className="text-center text-3xl">
+            <h2 className="text-center text-4xl">
               Connect with your favourite people
             </h2>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-black">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
-            <AuthShowcase />
+          <div className="grid w-full grid-cols-1 justify-center gap-2">
+            <EmailInput
+              onChange={(val) => {
+                console.log({ val });
+              }}
+            />
+            <PasswordInput
+              onChange={(val) => {
+                console.log({ val });
+              }}
+            />
           </div>
         </div>
       </main>
