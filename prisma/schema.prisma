@@ -14,30 +14,25 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 // Necessary for Next auth
 model Account {
-    id                String             @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String?            @db.Text
-    access_token      String?            @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String?            @db.Text
-    session_state     String?
-    user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Messages          Messages[]
-    Inbox             Inbox[]
-    InboxParticipant  InboxParticipant[]
+    id                       String             @id @default(cuid())
+    userId                   String
+    type                     String
+    provider                 String
+    providerAccountId        String
+    refresh_token            String?            @db.Text
+    access_token             String?            @db.Text
+    refresh_token_expires_in Int?               @db.Integer
+    expires_at               Int?
+    token_type               String?
+    scope                    String?
+    id_token                 String?            @db.Text
+    session_state            String?
+    user                     User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Messages                 Messages[]
+    Inbox                    Inbox[]
+    InboxParticipant         InboxParticipant[]
 
     @@unique([provider, providerAccountId])
 }
@@ -54,6 +49,7 @@ model User {
     id            String    @id @default(cuid())
     name          String?
     email         String?   @unique
+    password      String?   @default(dbgenerated())
     emailVerified DateTime?
     image         String?
     accounts      Account[]

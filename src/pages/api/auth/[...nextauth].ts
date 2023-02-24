@@ -1,12 +1,13 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialProvider from "next-auth/providers/credentials";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { hashSync, compareSync } from "bcrypt";
 
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db";
+import { TRPCError } from "@trpc/server";
 // import { api } from "../../../utils/api";
 
 export const authOptions: NextAuthOptions = {
@@ -22,17 +23,6 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
-    }),
     FacebookProvider({
       clientId: env.FACEBOOK_CLIENT_ID,
       clientSecret: env.FACEBOOK_CLIENT_SECRET,
@@ -46,7 +36,19 @@ export const authOptions: NextAuthOptions = {
           placeholder: "Password",
         },
       },
-      authorize(credentials, req) {
+      async authorize(credentials) {
+        console.log({ credentials });
+        if (credentials) {
+          const { email, password } = credentials;
+          const foundUser = await prisma.user.findFirst({
+            where: { email },
+          });
+          if (foundUser && foundUser.password) {
+            if (compareSync(password, foundUser.password)) {
+              return foundUser;
+            }
+          }
+        }
         return null;
       },
     }),
