@@ -45,18 +45,18 @@ function signUpReducer(state: ISignUpState, action: ISignUpAction) {
   }
 }
 
-const SignUp: NextPage = () => {
-  const { error, isError, isLoading, mutateAsync } =
+export const SignUpView: NextPage = () => {
+  const { error, isError, isLoading, mutateAsync, failureReason } =
     api.auth.signUp.useMutation();
 
   const [state, dispatch] = useReducer(signUpReducer, initialState);
 
   useEffect(() => {
-    console.log("Hit an error", error?.data);
+    console.log("Hit an error", error, failureReason);
     return () => {
       console.log("un mount");
     };
-  }, [isError, error]);
+  }, [isError, error, failureReason]);
 
   return (
     <>
@@ -79,7 +79,7 @@ const SignUp: NextPage = () => {
                 className="aspect-square"
               />
             </div>
-            <div className="grid grid-cols-1">
+            <div className="grid grid-cols-1 items-center justify-center">
               <h2 className="text-center text-4xl font-medium">
                 Connect with your favourite people
               </h2>
@@ -134,5 +134,3 @@ const SignUp: NextPage = () => {
     </>
   );
 };
-
-export default SignUp;
