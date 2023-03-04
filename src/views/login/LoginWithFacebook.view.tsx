@@ -13,14 +13,7 @@ export const LoginWithFacebook: NextPage = () => {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router
-        .push("/")
-        .then(() => {
-          console.log("Route changed");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      void router.push("/");
     }
   }, [status, router]);
 

@@ -1,28 +1,46 @@
-import type { NextPage } from "next";
+import type {
+  NextPage,
+  InferGetServerSidePropsType,
+  GetStaticProps,
+  GetStaticPropsContext,
+} from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { HomeView } from "src/views/home/Home.view";
 
-const App: NextPage = (props) => {
-  const { status, data } = useSession();
+interface Props {
+  name: string;
+}
+
+const App: NextPage<Props> = (
+  _props: InferGetServerSidePropsType<typeof getStaticProps>
+) => {
+  const { status } = useSession();
+
   const router = useRouter();
 
   useEffect(() => {
-    console.log({ status, data });
     if (status === "unauthenticated") {
-      router
-        .push("/login")
-        .then(() => {
-          console.log("Route changed");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      void router.push("/login");
     }
   }, [router, status]);
 
-  return <HomeView />;
+  return (
+    <div>
+      <HomeView />
+    </div>
+  );
 };
 
 export default App;
+
+export const getStaticProps: GetStaticProps<Props> = (
+  _context: GetStaticPropsContext
+) => {
+  return {
+    props: {
+      name: "Emil",
+    },
+  };
+};
