@@ -1,8 +1,15 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { LocalStorageKeys } from "src/utils/local-storage-keys";
 
+const AppRoutes = ["#", "thread", "people", "marketplace", "archive"] as const;
+
 export const useToggleSideBar = () => {
   const [open, setOpen] = useState<boolean>(true);
+  const [currentRoute, setCurrentRoute] = useState<
+    (typeof AppRoutes)[number] | undefined
+  >("#");
+  const { route } = useRouter();
 
   const toggleSideBar = () => {
     setOpen(!open);
@@ -10,8 +17,17 @@ export const useToggleSideBar = () => {
   };
 
   useEffect(() => {
+    const foundRoute = AppRoutes.find((appRoute) => route.includes(appRoute));
+    console.debug({ foundRoute, route });
+    if (foundRoute) {
+      setCurrentRoute(foundRoute);
+    } else {
+      setCurrentRoute("#");
+    }
+  }, [route]);
+
+  useEffect(() => {
     const value = localStorage.getItem(LocalStorageKeys.sideBarToggle);
-    console.debug({ value });
     if (value === null) {
       localStorage.setItem(LocalStorageKeys.sideBarToggle, "true");
       setOpen(true);
@@ -22,5 +38,5 @@ export const useToggleSideBar = () => {
     return () => {};
   }, []);
 
-  return { open, toggleSideBar };
+  return { open, toggleSideBar, currentRoute };
 };
