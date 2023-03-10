@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Avatar, Dropdown } from "flowbite-react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 
 export const UserPreferencesDropDown = () => {
@@ -31,16 +31,18 @@ export const UserPreferencesDropDown = () => {
       inline={true}
     >
       <Dropdown.Header>
-        <span className="block text-sm">Bonnie Green</span>
+        <span className="block text-sm">{data?.user?.name}</span>
         <span className="block truncate text-sm font-medium">
-          name@flowbite.com
+          {data?.user?.email}
         </span>
       </Dropdown.Header>
-      <Dropdown.Item>Dashboard</Dropdown.Item>
-      <Dropdown.Item>Settings</Dropdown.Item>
-      <Dropdown.Item>Earnings</Dropdown.Item>
-      <Dropdown.Divider />
-      <Dropdown.Item>Sign out</Dropdown.Item>
+      <Dropdown.Item
+        onClick={() => {
+          void signOut({ callbackUrl: "/login" });
+        }}
+      >
+        Sign out
+      </Dropdown.Item>
     </Dropdown>
   );
 };

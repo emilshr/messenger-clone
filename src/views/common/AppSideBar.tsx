@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import { ArchiveBoxIcon } from "../icons/ArchiveBoxIcon";
 import { ChatBubbleOvalLeftIcon } from "../icons/ChatBubbleIcon";
 import { HomeModernIcon } from "../icons/HomeModernIcon";
-import { UserCircleIcon } from "../icons/UserCircleIcon";
-import { UserGroupIcon } from "../icons/UserGroupIcon";
 import { ViewColumnsIcon } from "../icons/ViewColumnsIcon";
 import { UserPreferencesDropDown } from "../user-preferences/UserPreferencesDropDown";
 import { useToggleSideBar } from "./custom-hooks/useToggleSidebar";
