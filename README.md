@@ -4,6 +4,8 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 
 ## What's next
 
+Make sure you create a `.env` file in the root directory. Use values from `.env.example` as reference to pre-fill.
+
 To start off, try running the following commands after cloning the repository
 
 1. `npm i`
