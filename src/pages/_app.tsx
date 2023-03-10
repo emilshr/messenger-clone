@@ -15,7 +15,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <div className="flex">
         <AppSideBar />
-        <Component {...pageProps} />
+        <div className="w-full">
+          <Component {...pageProps} />
+        </div>
       </div>
     </SessionProvider>
   );

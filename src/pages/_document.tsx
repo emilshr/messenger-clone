@@ -1,6 +1,6 @@
 import { Head, Html, Main, NextScript } from "next/document";
 
-export default function Document(props) {
+export default function Document() {
   return (
     <Html>
       <Head>
@@ -9,10 +9,6 @@ export default function Document(props) {
           content="A clone of Meta messenger developed by @emilshr"
         />
         <link rel="icon" href="/favicon.ico" />
-        <link
-          href="https://fonts.cdnfonts.com/css/helvetica-neue-9"
-          rel="stylesheet"
-        />
       </Head>
       <body>
         <Main />
