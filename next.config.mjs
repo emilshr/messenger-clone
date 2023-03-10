@@ -13,5 +13,14 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    // This is to enable the next image component to understand images hosted on the facebook domain
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'platform-lookaside.fbsbx.com',
+      },
+    ],
+  },
 };
 export default config;
