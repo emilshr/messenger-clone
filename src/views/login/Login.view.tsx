@@ -3,9 +3,10 @@ import Head from "next/head";
 import Image from "next/image";
 import { signIn, useSession } from "next-auth/react";
 
-import { Button, LoginPageHyperLinks } from "@components";
+import { Button } from "@components";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { LoginPageHyperLinks } from "./LoginPageHyperLinks";
 
 export const LoginView: NextPage = () => {
   const router = useRouter();

@@ -1,12 +1,13 @@
 import { Sidebar } from "flowbite-react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { ArchiveBoxIcon } from "../icons/ArchiveBoxIcon";
-import { ChatBubbleOvalLeftIcon } from "../icons/ChatBubbleIcon";
-import { HomeModernIcon } from "../icons/HomeModernIcon";
-import { ViewColumnsIcon } from "../icons/ViewColumnsIcon";
-import { UserPreferencesDropDown } from "../user-preferences/UserPreferencesDropDown";
-import { useToggleSideBar } from "./custom-hooks/useToggleSidebar";
+import { ArchiveBoxIcon } from "../../icons/ArchiveBoxIcon";
+import { ChatBubbleOvalLeftIcon } from "../../icons/ChatBubbleIcon";
+import { HomeModernIcon } from "../../icons/HomeModernIcon";
+import { UserGroupIcon } from "../../icons/UserGroupIcon";
+import { ViewColumnsIcon } from "../../icons/ViewColumnsIcon";
+import { UserPreferencesDropDown } from "../../user-preferences/UserPreferencesDropDown";
+import { useToggleSideBar } from "../custom-hooks/useToggleSidebar";
 
 export const AppSideBar = () => {
   const { open, toggleSideBar, currentRoute } = useToggleSideBar();
@@ -24,7 +25,7 @@ export const AppSideBar = () => {
         collapsed={!open}
         className="flex"
       >
-        <Sidebar.Items className="h-[89%]">
+        <Sidebar.Items className="h-[90%]">
           <Sidebar.ItemGroup className="cursor-pointer">
             <Sidebar.Item
               active={currentRoute === "thread"}
@@ -37,7 +38,7 @@ export const AppSideBar = () => {
             >
               Chats
             </Sidebar.Item>
-            {/* <Sidebar.Item
+            <Sidebar.Item
               active={currentRoute === "people"}
               href="#"
               onClick={() => {
@@ -47,7 +48,7 @@ export const AppSideBar = () => {
               disabled={true}
             >
               People
-            </Sidebar.Item> */}
+            </Sidebar.Item>
             <Sidebar.Item
               active={currentRoute === "marketplace"}
               href="#"

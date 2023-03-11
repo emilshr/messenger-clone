@@ -2,8 +2,9 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 
-import { Button, ErrorBanner, LoginPageHyperLinks } from "@components";
+import { Button, ErrorBanner } from "@components";
 import { useRouter } from "next/router";
+import { LoginPageHyperLinks } from "./login/LoginPageHyperLinks";
 
 export const ErrorView: NextPage = () => {
   const router = useRouter();
