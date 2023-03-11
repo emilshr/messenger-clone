@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { hashSync } from "bcrypt";
 import { env } from "src/env/server.mjs";
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const signUpRouter = createTRPCRouter({
   signUp: publicProcedure

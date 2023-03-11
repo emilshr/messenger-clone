@@ -1,3 +1,3 @@
-import { LoginWithFacebook } from "src/views/login/LoginWithFacebook.view";
+import { LoginView } from "src/views/login/Login.view";
 
-export default LoginWithFacebook;
+export default LoginView;

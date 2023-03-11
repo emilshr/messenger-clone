@@ -1,4 +1,4 @@
-import { mergeRouters } from "../../trpc";
+import { mergeRouters } from "../trpc";
 import { loginRouter } from "./login";
 import { signUpRouter } from "./sign-up";
 

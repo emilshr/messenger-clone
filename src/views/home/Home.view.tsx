@@ -46,6 +46,7 @@ export const HomeView: NextPage = () => {
                     await router.push(url);
                   }}
                   title="Sign out"
+                  pill
                 />
               </div>
             </div>

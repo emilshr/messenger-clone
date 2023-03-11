@@ -16,23 +16,25 @@ datasource db {
 
 // Necessary for Next auth
 model Account {
-    id                       String             @id @default(cuid())
+    id                       String              @id @default(cuid())
     userId                   String
     type                     String
     provider                 String
     providerAccountId        String
-    refresh_token            String?            @db.Text
-    access_token             String?            @db.Text
-    refresh_token_expires_in Int?               @db.Integer
+    refresh_token            String?             @db.Text
+    access_token             String?             @db.Text
+    refresh_token_expires_in Int?                @db.Integer
     expires_at               Int?
     token_type               String?
     scope                    String?
-    id_token                 String?            @db.Text
+    id_token                 String?             @db.Text
     session_state            String?
-    user                     User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user                     User                @relation(fields: [userId], references: [id], onDelete: Cascade)
     Messages                 Messages[]
     Inbox                    Inbox[]
-    InboxParticipant         InboxParticipant[]
+    InboxParticipants        InboxParticipants[]
+    last_modified_time       DateTime            @updatedAt
+    AccountFriendship        AccountFriendship[]
 
     @@unique([provider, providerAccountId])
 }
@@ -46,14 +48,15 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    password      String?   @default(dbgenerated())
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+    id                 String    @id @default(cuid())
+    name               String?
+    email              String?   @unique
+    password           String?   @default(dbgenerated())
+    emailVerified      DateTime?
+    image              String?
+    last_modified_time DateTime  @updatedAt
+    accounts           Account[]
+    sessions           Session[]
 }
 
 model VerificationToken {
@@ -64,33 +67,52 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
-model InboxParticipant {
-    id         String @id
-    account_id String @map("accountId")
-    inbox_id   String @map("inboxId")
+model InboxParticipants {
+    id                 String   @id
+    account_id         String   @map("accountId")
+    inbox_id           String   @map("inboxId")
+    last_modified_time DateTime @updatedAt
 
     account Account @relation(fields: [account_id], references: [id])
     inbox   Inbox   @relation(fields: [inbox_id], references: [id])
-
-    @@map("InboxParticipants")
 }
 
 model Inbox {
-    id                   String             @id @default(cuid())
-    account_id           String             @map("accountId")
-    last_sent_account_id String             @map("lastSentAccountId")
-    last_sent_message_id String             @map("lastSentMessageId")
-    account              Account            @relation(fields: [last_sent_account_id], references: [id], onUpdate: Cascade)
+    id                   String              @id @default(cuid())
+    account_id           String              @map("accountId")
+    last_sent_account_id String              @map("lastSentAccountId")
+    last_sent_message_id String              @map("lastSentMessageId")
+    account              Account             @relation(fields: [last_sent_account_id], references: [id], onUpdate: Cascade)
     Messages             Messages[]
-    InboxParticipant     InboxParticipant[]
+    InboxParticipants    InboxParticipants[]
+    last_modified_time   DateTime            @updatedAt
 }
 
 model Messages {
-    id              String  @id @default(cuid())
-    accountId       String
-    inboxId         String
-    message         String  @db.VarChar()
-    attachment_path String? @map("attachmentPath") @db.VarChar()
-    account         Account @relation(fields: [accountId], references: [id])
-    inbox           Inbox   @relation(fields: [inboxId], references: [id])
+    id                 String   @id @default(cuid())
+    accountId          String
+    inboxId            String
+    message            String   @db.VarChar()
+    attachment_path    String?  @map("attachmentPath") @db.VarChar()
+    account            Account  @relation(fields: [accountId], references: [id])
+    inbox              Inbox    @relation(fields: [inboxId], references: [id])
+    last_modified_time DateTime @updatedAt
+}
+
+enum FriendRequestStatus {
+    REQUEST_SENT
+    REQUEST_CANCELLED
+    REQUEST_ACCEPTED
+}
+
+model AccountFriendship {
+    id                     String              @id @default(cuid())
+    from_account_id        String              @map("fromAccountId")
+    to_account_id          String              @map("toAccountId")
+    friend_request_status  FriendRequestStatus
+    request_sent_time      DateTime            @map("requestSentTime") @db.Timestamp()
+    request_responded_time DateTime            @map("requestRespondedTime") @db.Timestamp()
+    last_modified_time     DateTime            @updatedAt
+
+    account Account @relation(onDelete: Cascade, fields: [from_account_id], references: [id])
 }

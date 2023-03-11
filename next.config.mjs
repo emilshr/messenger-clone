@@ -20,6 +20,10 @@ const config = {
         protocol: 'https',
         hostname: 'platform-lookaside.fbsbx.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
     ],
   },
 };

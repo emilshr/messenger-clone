@@ -1,13 +1,10 @@
 import Image from "next/image";
 import { Avatar, Dropdown } from "flowbite-react";
 import { signOut, useSession } from "next-auth/react";
-import { useEffect } from "react";
 
 export const UserPreferencesDropDown = () => {
   const { data } = useSession();
-  useEffect(() => {
-    console.debug({ data });
-  });
+
   return (
     <Dropdown
       label={
@@ -16,7 +13,7 @@ export const UserPreferencesDropDown = () => {
           img={(props) => (
             <Image
               alt={props.alt || "Your profile picture"}
-              src={data?.user?.image || ""}
+              src={data?.user?.image || "/"}
               width={32}
               height={32}
               className="rounded-full"

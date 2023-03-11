@@ -1,15 +1,13 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { signOut } from "next-auth/react";
 
 import { Button, LoginPageHyperLinks } from "@components";
 import { useRouter } from "next/router";
 
 export const Error404View: NextPage = () => {
   const router = useRouter();
-  const { query } = router;
-  const { error } = query;
+
   return (
     <>
       <Head>

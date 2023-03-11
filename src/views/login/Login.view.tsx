@@ -7,7 +7,7 @@ import { Button, LoginPageHyperLinks } from "@components";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export const LoginWithFacebook: NextPage = () => {
+export const LoginView: NextPage = () => {
   const router = useRouter();
   const { status } = useSession();
 
@@ -44,14 +44,23 @@ export const LoginWithFacebook: NextPage = () => {
               </h2>
             </div>
 
-            <div className="flex">
+            <div className="flex flex-col gap-y-2">
               <Button
-                title="Continue with facebook"
+                title="Continue with Facebook"
                 onClick={async () => {
                   await signIn("facebook", {
-                    callbackUrl: "/",
+                    callbackUrl: "/thread",
                   });
                 }}
+                pill
+              />
+              <Button
+                color="light"
+                onClick={async () => {
+                  await signIn("github", { callbackUrl: "/thread" });
+                }}
+                title="Continue with Github"
+                pill
               />
             </div>
           </div>
