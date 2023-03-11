@@ -10,7 +10,8 @@
     "start": "next start",
     "start:db": "npx env-cmd -f .env docker-compose up -d",
     "sync:db": "npx prisma db push",
-    "pre-dev": "./node_modules/.bin/run-s start:db postinstall sync:db"
+    "pre-dev": "./node_modules/.bin/run-s start:db postinstall sync:db",
+    "tsc": "npx tsc"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
