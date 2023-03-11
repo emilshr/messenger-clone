@@ -33,7 +33,7 @@ model Account {
     Messages                 Messages[]
     Inbox                    Inbox[]
     InboxParticipants        InboxParticipants[]
-    last_modified_time       DateTime            @updatedAt
+    last_modified_time       DateTime            @default(now()) @updatedAt
     AccountFriendship        AccountFriendship[]
 
     @@unique([provider, providerAccountId])
@@ -54,7 +54,7 @@ model User {
     password           String?   @default(dbgenerated())
     emailVerified      DateTime?
     image              String?
-    last_modified_time DateTime  @updatedAt
+    last_modified_time DateTime  @default(now()) @updatedAt
     accounts           Account[]
     sessions           Session[]
 }
@@ -71,7 +71,7 @@ model InboxParticipants {
     id                 String   @id
     account_id         String   @map("accountId")
     inbox_id           String   @map("inboxId")
-    last_modified_time DateTime @updatedAt
+    last_modified_time DateTime @default(now()) @updatedAt
 
     account Account @relation(fields: [account_id], references: [id])
     inbox   Inbox   @relation(fields: [inbox_id], references: [id])
@@ -85,7 +85,7 @@ model Inbox {
     account              Account             @relation(fields: [last_sent_account_id], references: [id], onUpdate: Cascade)
     Messages             Messages[]
     InboxParticipants    InboxParticipants[]
-    last_modified_time   DateTime            @updatedAt
+    last_modified_time   DateTime            @default(now()) @updatedAt
 }
 
 model Messages {
@@ -96,7 +96,7 @@ model Messages {
     attachment_path    String?  @map("attachmentPath") @db.VarChar()
     account            Account  @relation(fields: [accountId], references: [id])
     inbox              Inbox    @relation(fields: [inboxId], references: [id])
-    last_modified_time DateTime @updatedAt
+    last_modified_time DateTime @default(now()) @updatedAt
 }
 
 enum FriendRequestStatus {
@@ -112,7 +112,7 @@ model AccountFriendship {
     friend_request_status  FriendRequestStatus
     request_sent_time      DateTime            @map("requestSentTime") @db.Timestamp()
     request_responded_time DateTime            @map("requestRespondedTime") @db.Timestamp()
-    last_modified_time     DateTime            @updatedAt
+    last_modified_time     DateTime            @default(now()) @updatedAt
 
     account Account @relation(onDelete: Cascade, fields: [from_account_id], references: [id])
 }
