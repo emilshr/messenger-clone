@@ -109,9 +109,9 @@ model AccountFriendship {
     id                     String              @id @default(cuid())
     from_account_id        String              @map("fromAccountId")
     to_account_id          String              @map("toAccountId")
-    friend_request_status  FriendRequestStatus
+    friend_request_status  FriendRequestStatus @map("friendRequestStatus")
     request_sent_time      DateTime            @map("requestSentTime") @db.Timestamp()
-    request_responded_time DateTime            @map("requestRespondedTime") @db.Timestamp()
+    request_responded_time DateTime?           @map("requestRespondedTime") @db.Timestamp()
     last_modified_time     DateTime            @default(now()) @updatedAt
 
     account Account @relation(onDelete: Cascade, fields: [from_account_id], references: [id])

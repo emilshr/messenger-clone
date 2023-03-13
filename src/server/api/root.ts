@@ -1,4 +1,5 @@
 import { inboxRouters } from "./inbox";
+import { peopleRouters } from "./people";
 import { createTRPCRouter } from "./trpc";
 
 /**
@@ -8,6 +9,7 @@ import { createTRPCRouter } from "./trpc";
  */
 export const appRouter = createTRPCRouter({
   inbox: inboxRouters,
+  people: peopleRouters,
 });
 
 // export type definition of API
