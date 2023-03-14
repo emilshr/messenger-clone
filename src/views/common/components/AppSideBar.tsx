@@ -1,13 +1,12 @@
-import { Sidebar } from "flowbite-react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { ArchiveBoxIcon } from "../../icons/ArchiveBoxIcon";
-import { ChatBubbleOvalLeftIcon } from "../../icons/ChatBubbleIcon";
-import { HomeModernIcon } from "../../icons/HomeModernIcon";
+import { Sidebar } from "flowbite-react";
 import { UserGroupIcon } from "../../icons/UserGroupIcon";
+import { HomeModernIcon } from "../../icons/HomeModernIcon";
+import { ArchiveBoxIcon } from "../../icons/ArchiveBoxIcon";
 import { ViewColumnsIcon } from "../../icons/ViewColumnsIcon";
-import { UserPreferencesDropDown } from "../../user-preferences/UserPreferencesDropDown";
 import { useToggleSideBar } from "../custom-hooks/useToggleSidebar";
+import { ChatBubbleOvalLeftIcon } from "../../icons/ChatBubbleIcon";
+import { UserPreferencesDropDown } from "../../user-preferences/UserPreferencesDropDown";
 
 export const AppSideBar = () => {
   const { open, toggleSideBar, currentRoute } = useToggleSideBar();

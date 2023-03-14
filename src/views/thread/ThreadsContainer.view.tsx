@@ -15,7 +15,3 @@ export const ThreadsContainer = () => {
     </>
   );
 };
-
-export async function getStaticProps() {
-  const res = await api.inbox.fetchInboxes.useQuery();
-}

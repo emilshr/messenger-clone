@@ -27,16 +27,16 @@ export const PeopleContainerView = () => {
             </div>
           </div>
         </div>
+        {open && <AddFriendsModal />}
         <div className="flex h-[8%] flex-col">
           <ExtendedButton
             title="Add friends"
             onClick={() => {
-              setOpen(true);
+              setOpen(!open);
             }}
           />
         </div>
       </div>
-      <AddFriendsModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 };
